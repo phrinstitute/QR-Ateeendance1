@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Attendance System</title>
+    <script>
+        function markAttendance() {
+            let employeeId = document.getElementById("employeeId").value;
+            if (employeeId === "") {
+                alert("Please enter your Employee ID.");
+                return;
+            }
+            
+            let timestamp = new Date().toLocaleString();
+            
+            fetch("https://script.google.com/macros/s/YOUR_GOOGLE_SCRIPT_ID/exec?employeeId=" + employeeId + "&timestamp=" + encodeURIComponent(timestamp))
+            .then(response => response.text())
+            .then(data => {
+                alert("📌 Your attendance has been successfully recorded.");
+                document.getElementById("employeeId").value = "";
+            })
+            .catch(error => alert("⚠️ Something went wrong, please try again."));
+        }
+    </script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f8f9fa; }
+        h2 { color: #007bff; }
+        input { padding: 10px; margin: 10px; width: 250px; }
+        button { padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background: #218838; }
+    </style>
+</head>
+<body>
+    <h2>📌 QR Attendance System</h2>
+    <p>Please enter your Employee ID:</p>
+    <input type="text" id="employeeId" placeholder="Employee ID">
+    <button onclick="markAttendance()">✅ Mark Attendance</button>
+</body>
+</html>
